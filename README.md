@@ -288,54 +288,57 @@ Unfurnished:     Base price
 
 **6 Engineered Features** (No Data Leakage):
 
-#### Feature 1: `Area_SqFt` (Numerical)
-- **Source:** Direct extraction from raw area string
-- **Importance:** 42.3%  
-- **Purpose:** Primary size indicator
-- **Range:** 350 - 4,800 sq ft
+#### Feature 1: `BHK_Tier_Interaction` (Interaction Feature)
+- **Source:** Interaction between BHK and Locality Tier
+- **Importance:** 55.4%  
+- **Purpose:** Captures "3 BHK in premium locality" premium effects
+- **Calculation:** `BHK * Locality_Tier`
+- **Impact:** Dominant factor - location quality combined with property size
 
-#### Feature 2: `BHK` (Numerical)
-- **Source:** Extracted from BHK configuration string
-- **Importance:** 18.7%
-- **Purpose:** Room configuration indicator
-- **Range:** 1 - 5 bedrooms
-
-#### Feature 3: `Locality_Encoded` (Target Encoding)
-- **Source:** Target-encoded locality names
-- **Importance:** 21.5%  
-- **Purpose:** Captures neighborhood price levels
-- **Method:** Mean price per locality (train set only)
-
-#### Feature 4: `Furnishing_Encoded` (Ordinal)
-- **Source:** Furnishing status
-- **Importance:** 8.2%
-- **Encoding:** 
-  - Unfurnished: 0
-  - Semi-Furnished: 1
-  - Furnished: 2
-
-#### Feature 5: `Locality_Tier_Encoded` (Categorical Grouping)
+#### Feature 2: `Locality_Tier_Encoded` (Categorical Grouping)
 - **Source:** Grouped localities into tiers
-- **Importance:** 5.8%
+- **Importance:** 17.8%
+- **Purpose:** Captures neighborhood price levels
 - **Tiers:**
   - Premium: Bodakdev, Satellite, Prahlad Nagar (>₹80 Lakhs avg)
   - Mid-Range: Maninagar, Gota, Thaltej (₹50-80 Lakhs)
   - Affordable: Naroda, Vastral, Odhav (<₹50 Lakhs)
 
-#### Feature 6: `BHK_Tier_Interaction` (Interaction Feature)
-- **Source:** Interaction between BHK and Locality Tier
-- **Importance:** 3.5%
-- **Purpose:** Captures "3 BHK in premium locality" premium effects
-- **Calculation:** `BHK * Locality_Tier`
+#### Feature 3: `BHK` (Numerical)
+- **Source:** Extracted from BHK configuration string
+- **Importance:** 16.0%
+- **Purpose:** Room configuration indicator
+- **Range:** 1 - 5 bedrooms
+
+#### Feature 4: `Area_SqFt` (Numerical)
+- **Source:** Direct extraction from raw area string
+- **Importance:** 8.2%
+- **Purpose:** Property size indicator
+- **Range:** 350 - 4,800 sq ft
+
+#### Feature 5: `Locality_Encoded` (Target Encoding)
+- **Source:** Target-encoded locality names
+- **Importance:** 1.8%  
+- **Purpose:** Specific location within tier
+- **Method:** Mean price per locality (train set only)
+
+#### Feature 6: `Furnishing_Encoded` (Ordinal)
+- **Source:** Furnishing status
+- **Importance:** 0.9%
+- **Purpose:** Furnishing level indicator
+- **Encoding:** 
+  - Unfurnished: 0
+  - Semi-Furnished: 1
+  - Furnished: 2
 
 **Feature Importance Ranking:**
 ```
-1. Area_SqFt              42.3%
-2. Locality_Encoded       21.5%
-3. BHK                    18.7%
-4. Furnishing_Encoded      8.2%
-5. Locality_Tier_Encoded   5.8%
-6. BHK_Tier_Interaction    3.5%
+1. BHK × Tier Quality        55.4%  ⭐ Dominant Factor
+2. Locality Tier             17.8%
+3. Number of Bedrooms        16.0%
+4. Property Size (sq.ft)      8.2%
+5. Location                   1.8%
+6. Furnishing Status          0.9%
 ```
 
 **No Data Leakage Verification:**
